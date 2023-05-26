@@ -46,6 +46,16 @@ public class VacanciesBot extends TelegramLongPollingBot {
                     String id = callbackData.split("=")[1];
                     showVacancyDescription(id, update);
                 }
+                //-------------------------------------------------------------
+                else if ("Show senior Vacancies".equals(callbackData)) {
+                    showSeniorVacancies(update);
+                } else if (callbackData.startsWith("vacancyId=5")) {
+                    String id = callbackData.split("=")[1];
+                    showVacancyDescription(id, update);
+                } else if (callbackData.startsWith("vacancyId=6")) {
+                    String id = callbackData.split("=")[1];
+                    showVacancyDescription(id, update);
+                }
             }
         } catch (Exception e) {
             throw new RuntimeException("Can't send message to user!", e);
@@ -53,9 +63,34 @@ public class VacanciesBot extends TelegramLongPollingBot {
         }
     }
 
+    private void showSeniorVacancies(Update update) throws TelegramApiException {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setText("Please choose vacancy senior:");
+        sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId());
+        sendMessage.setReplyMarkup(getSeniorVacanciesMenu());
+        execute(sendMessage);
+    }
+
+    private ReplyKeyboard getSeniorVacanciesMenu() {
+        List<InlineKeyboardButton> row = new ArrayList<>();
+        InlineKeyboardButton midVacancyMate = new InlineKeyboardButton();
+        midVacancyMate.setText("Senior java developer at MA");
+        midVacancyMate.setCallbackData("vacancyId=5");
+        row.add(midVacancyMate);
+
+        InlineKeyboardButton midVacancyAmazon = new InlineKeyboardButton();
+        midVacancyAmazon.setText("Senior java developer at Amazon");
+        midVacancyAmazon.setCallbackData("vacancyId=6");
+        row.add(midVacancyAmazon);
+
+        InlineKeyboardMarkup keyboard  = new InlineKeyboardMarkup();
+        keyboard.setKeyboard(List.of(row));
+        return keyboard;
+    }
+
     private void showMiddleVacancies(Update update) throws TelegramApiException {
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setText("Please choose vacancy:");
+        sendMessage.setText("Please choose vacancy middle:");
         sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId());
         sendMessage.setReplyMarkup(getMiddleVacanciesMenu());
         execute(sendMessage);
@@ -64,12 +99,12 @@ public class VacanciesBot extends TelegramLongPollingBot {
     private ReplyKeyboard getMiddleVacanciesMenu() {
         List<InlineKeyboardButton> row = new ArrayList<>();
         InlineKeyboardButton midVacancyMate = new InlineKeyboardButton();
-        midVacancyMate.setText("Middle jawa developer at MA");
+        midVacancyMate.setText("Middle java developer at MA");
         midVacancyMate.setCallbackData("vacancyId=3");
         row.add(midVacancyMate);
 
         InlineKeyboardButton midVacancyAmazon = new InlineKeyboardButton();
-        midVacancyAmazon.setText("Middle jawa developer at Amazon");
+        midVacancyAmazon.setText("Middle java developer at Amazon");
         midVacancyAmazon.setCallbackData("vacancyId=4");
         row.add(midVacancyAmazon);
 
@@ -86,7 +121,7 @@ public class VacanciesBot extends TelegramLongPollingBot {
     }
     private void showJuniorVacancies(Update update) throws TelegramApiException {
         SendMessage sendMessage = new SendMessage();
-        sendMessage.setText("Please choose vacancy:");
+        sendMessage.setText("Please choose vacancy junior:");
         sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId());
         sendMessage.setReplyMarkup(getJuniorVacanciesMenu());
         execute(sendMessage);
@@ -95,12 +130,12 @@ public class VacanciesBot extends TelegramLongPollingBot {
     private ReplyKeyboard getJuniorVacanciesMenu() {
         List<InlineKeyboardButton> row = new ArrayList<>();
         InlineKeyboardButton myVacancy = new InlineKeyboardButton();
-        myVacancy.setText("Junior jawa developer at MA");
+        myVacancy.setText("Junior java developer at MA");
         myVacancy.setCallbackData("vacancyId=1");
         row.add(myVacancy);
 
         InlineKeyboardButton googleVacancy = new InlineKeyboardButton();
-        googleVacancy.setText("Junior jawa developer at Google");
+        googleVacancy.setText("Junior java developer at Google");
         googleVacancy.setCallbackData("vacancyId=2");
         row.add(googleVacancy);
 

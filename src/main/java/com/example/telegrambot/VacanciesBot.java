@@ -39,6 +39,12 @@ public class VacanciesBot extends TelegramLongPollingBot {
                 //------------------------------------------------------------
                    else if ("Show middle Vacancies".equals(callbackData)) {
                     showMiddleVacancies(update);
+                } else if (callbackData.startsWith("vacancyId=3")) {
+                    String id = callbackData.split("=")[1];
+                    showVacancyDescription(id, update);
+                } else if (callbackData.startsWith("vacancyId=4")) {
+                    String id = callbackData.split("=")[1];
+                    showVacancyDescription(id, update);
                 }
             }
         } catch (Exception e) {
@@ -64,7 +70,7 @@ public class VacanciesBot extends TelegramLongPollingBot {
 
         InlineKeyboardButton midVacancyAmazon = new InlineKeyboardButton();
         midVacancyAmazon.setText("Middle jawa developer at Amazon");
-        midVacancyAmazon.setCallbackData("vacancyid=4");
+        midVacancyAmazon.setCallbackData("vacancyId=4");
         row.add(midVacancyAmazon);
 
         InlineKeyboardMarkup keyboard  = new InlineKeyboardMarkup();
